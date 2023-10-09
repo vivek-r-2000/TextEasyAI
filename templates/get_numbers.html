@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phone Number Collection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_style.css') }}" />
+</head>
+<body>
+    <h1>Enter Phone Numbers</h1>
+    <form action="/submit" method="post">
+        <div id="groups">
+            <div class="group">
+                <label for="group_name">Group Name:</label>
+                <input type="text" name="group_name[]" required>
+                <div class="phone_numbers">
+                    <div class="phone_number_entry">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name[][0]" required>
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" name="phone[][0]" required>
+                        <button type="button" class="remove_phone">Remove Phone Number</button>
+                    </div>
+                </div>
+                <button type="button" class="add_phone">Add Another Phone Number</button>
+                <button type="button" class="remove_group">Remove Group</button>
+            </div>
+        </div>
+        <button type="button" id="add_group">Add Another Group</button>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+<script>
+        document.getElementById("add_group").addEventListener("click", function() {
+        const groupsDiv = document.getElementById("groups");
+        const newGroup = document.querySelector(".group").cloneNode(true);
+        groupsDiv.appendChild(newGroup);
+    });
+
+    document.addEventListener("click", function(e) {
+        if (e.target && e.target.className === "add_phone") {
+            const groupDiv = e.target.closest('.group');
+            if (groupDiv) {
+                const phoneNumbersDiv = groupDiv.querySelector(".phone_numbers");
+                const newPhoneNumberEntry = groupDiv.querySelector(".phone_number_entry").cloneNode(true);
+                phoneNumbersDiv.appendChild(newPhoneNumberEntry);
+            }
+        }
+        if (e.target && e.target.className === "remove_phone") {
+            e.target.parentElement.remove();
+        }
+        if (e.target && e.target.className === "remove_group") {
+            e.target.parentElement.remove();
+        }
+    });
+
+</script>

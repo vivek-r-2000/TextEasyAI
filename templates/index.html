@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+  <title>Message generator</title>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='icon.jpg') }}"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+  <img src="{{ url_for('static', filename='icon.jpg') }}" class="icon" />
+  <h3>I'll help you with your message</h3>
+  <form action="/" method="post">
+    <label for="topic">What is your message about?</label>
+    <input type="text" name="topic" placeholder="Enter a topic" required />
+    <label for="reciever">Who are you sending your message to?</label>
+    <input type="text" name="reciever" placeholder="Family/boss/lovers/.." required />
+    <label for="mood">Is it a formal or casual message?</label>
+    <input type="text" name="mood" placeholder="formal/casual/romantic/..." required/>
+    <label for="length">How long should be your message?</label>
+    <input type="text" name="length" placeholder="long/brief/20 words/..." required/>
+    <input type="submit" value="Generate Message" />
+</form>
+
+
+  {% if result %}
+  <!-- <div class="result">{{ result }}</div> -->
+  <button id="refreshButton">regenerate</button>
+  <h5>you can edit your message one last time before sending.</h5>
+  <form action="/send" method="post">
+      <input type="text" name="message" value="{{ result }}" />
+      <label for="group">Select a Group:</label>
+      <select name="group" id="group" required>
+        {% for group_name in group_names %}
+        <option value="{{ group_name }}">{{ group_name }}</option>
+        {% endfor %}
+      </select>
+      <input type="hidden" name="group" value="{{ selected_group }}" /> <!-- Add the hidden input for the selected group -->
+      <input type="submit" value="Send Message" />
+    </form>
+  {% endif %}
+  <a href="/get_numbers" class="top-right-button">Add contacts</a> <!-- Add the button to navigate to get_numbers.html -->
+  <script>
+    document.getElementById("refreshButton").addEventListener("click", function() {
+        location.reload(); // Reload the page
+    });
+</script>
+</body>
