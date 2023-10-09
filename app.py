@@ -4,7 +4,7 @@ from flask import Flask, redirect, render_template, request, url_for
 import plivo
 
 app = Flask(__name__)
-openai.api_key = "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"
+openai.api_key = "<openai_api_key>"
 
 groups = []
 
@@ -75,8 +75,8 @@ def index():
 
 @app.route("/send", methods=["POST"])
 def send_message():
-    auth_id = "MAOTHIODFMOWUTZMFLZS"
-    auth_token = "MTEzMjI5Y2EtNTkxOS00ZDBjLWE2YjItNTM3MGYy"
+    auth_id = "plivo_api_key"
+    auth_token = "plivo_password"
 
     plivo_client = plivo.RestClient(auth_id, auth_token)
 
